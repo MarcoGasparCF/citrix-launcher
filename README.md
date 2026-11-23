@@ -35,7 +35,7 @@ Se o Edge nao arrancar com o perfil habitual, pode criar um perfil dedicado e gu
 
 Nesse perfil, abra o portal Citrix e configure o preenchimento automatico da password. Feche o Edge e adicione ao `.env` o caminho completo, por exemplo `EDGE_USER_DATA=C:\Users\utilizador\AppData\Local\CitrixLauncher\Edge`. A utilizacao da password guardada depende do preenchimento automatico e das politicas do Edge e do portal.
 
-Se houver varios recursos, configure `CITRIX_RESOURCE` com parte do nome de um unico recurso. O Citrix Workspace deve estar instalado e associado a ficheiros `.ica`. O EdgeDriver em `WebDriver\edgedriver_win64.zip` deve ter a mesma versao principal que o Edge.
+Se houver varios recursos, configure `CITRIX_RESOURCE` com parte do nome de um unico recurso. O Citrix Workspace deve estar instalado e associado a ficheiros `.ica`. Durante a instalacao, o EdgeDriver em `WebDriver\edgedriver_win64.zip` e descomprimido automaticamente; deve ter a mesma versao principal que o Edge.
 
 Para diagnosticar e resolver uma incompatibilidade de versões do Edge e do EdgeDriver, consulte [manutenção.md](./maintenance/manutenção.md).
 

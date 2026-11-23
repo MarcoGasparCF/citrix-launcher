@@ -47,7 +47,7 @@ try {
         throw "Extraia o pacote para uma pasta separada, fora de $destination, e volte a executar o instalador."
     }
 
-    foreach ($file in 'CitrixLauncher.ps1', 'OpenCitrix.bat', 'updatePassword.bat', 'icos\CitrixLauncher-cinza.ico', 'icos\CitrixLauncher-password.ico') {
+    foreach ($file in 'CitrixLauncher.ps1', 'OpenCitrix.bat', 'updatePassword.bat', 'WebDriver\edgedriver_win64.zip', 'icos\CitrixLauncher-cinza.ico', 'icos\CitrixLauncher-password.ico') {
         if (-not (Test-Path -LiteralPath (Join-Path $source $file) -PathType Leaf)) {
             throw "Falta $file. Extraia o pacote completo antes de instalar."
         }
@@ -63,6 +63,14 @@ try {
         if ($LASTEXITCODE -ge 8) {
             throw "Falha ao copiar os ficheiros (Robocopy: $LASTEXITCODE)."
         }
+    }
+
+    $driverArchive = Join-Path $destination 'WebDriver\edgedriver_win64.zip'
+    $driverDirectory = Join-Path $destination 'WebDriver\edgedriver_win64'
+    New-Item -ItemType Directory -Path $driverDirectory -Force | Out-Null
+    Expand-Archive -LiteralPath $driverArchive -DestinationPath $driverDirectory -Force
+    if (-not (Test-Path -LiteralPath (Join-Path $driverDirectory 'msedgedriver.exe') -PathType Leaf)) {
+        throw 'O arquivo edgedriver_win64.zip nao contem msedgedriver.exe.'
     }
 
     $envFile = Join-Path $destination '.env'
