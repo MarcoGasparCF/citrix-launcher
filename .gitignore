@@ -1,0 +1,5 @@
+.env
+.citrix-password
+WebDriver/edgedriver_win64/
+*.lnk
+maintenance/maintenance.log
