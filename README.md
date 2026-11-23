@@ -37,6 +37,8 @@ Nesse perfil, abra o portal Citrix e configure o preenchimento automatico da pas
 
 Se houver varios recursos, configure `CITRIX_RESOURCE` com parte do nome de um unico recurso. O Citrix Workspace deve estar instalado e associado a ficheiros `.ica`. O EdgeDriver em `WebDriver\edgedriver_win64.zip` deve ter a mesma versao principal que o Edge.
 
+Para diagnosticar e resolver uma incompatibilidade de versões do Edge e do EdgeDriver, consulte [manutenção.md](./maintenance/manutenção.md).
+
 O login completo, a selecao do recurso e a abertura da sessao dependem da configuracao da conta e devem ser testados com um OTP valido.
 
 <br><br>
