@@ -1,7 +1,7 @@
 @echo off
 setlocal DisableDelayedExpansion
 title Instalar Citrix Launcher
-set "installDir=%USERPROFILE%\apps"
+set "installDir=%USERPROFILE%\apps\CitrixLauncher"
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Instalar.ps1" -Destination "%installDir%"
 if errorlevel 1 goto failed
