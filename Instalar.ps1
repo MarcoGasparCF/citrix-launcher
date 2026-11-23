@@ -5,35 +5,38 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-function New-LauncherShortcut {
+function New-Shortcut {
     param(
         [string]$InstallDirectory,
-        [string]$DesktopDirectory
+        [string]$ShortcutDirectory,
+        [string]$ShortcutName,
+        [string]$TargetFile,
+        [string]$IconFile
     )
 
-    $launcherPath = Join-Path $InstallDirectory 'OpenCitrix.bat'
-    $iconPath = Join-Path $InstallDirectory 'icos\CitrixLauncher-cinza.ico'
-    if (-not (Test-Path -LiteralPath $launcherPath -PathType Leaf)) {
-        throw "Falta o launcher instalado: $launcherPath"
+    $targetPath = Join-Path $InstallDirectory $TargetFile
+    $iconPath = Join-Path $InstallDirectory $IconFile
+    if (-not (Test-Path -LiteralPath $targetPath -PathType Leaf)) {
+        throw "Falta o destino do atalho: $targetPath"
     }
     if (-not (Test-Path -LiteralPath $iconPath -PathType Leaf)) {
-        throw "Falta o icone do launcher: $iconPath"
+        throw "Falta o icone do atalho: $iconPath"
     }
-    if (-not $DesktopDirectory -or -not (Test-Path -LiteralPath $DesktopDirectory -PathType Container)) {
-        throw 'Nao foi possivel encontrar o ambiente de trabalho do utilizador.'
+    if (-not $ShortcutDirectory -or -not (Test-Path -LiteralPath $ShortcutDirectory -PathType Container)) {
+        throw "Nao foi possivel encontrar a pasta dos atalhos: $ShortcutDirectory"
     }
 
-    $shortcutPath = Join-Path $DesktopDirectory 'CitrixLauncher.lnk'
+    $shortcutPath = Join-Path $ShortcutDirectory $ShortcutName
     $shell = New-Object -ComObject WScript.Shell
     $shortcut = $shell.CreateShortcut($shortcutPath)
-    $shortcut.TargetPath = $launcherPath
+    $shortcut.TargetPath = $targetPath
     $shortcut.WorkingDirectory = $InstallDirectory
     $shortcut.IconLocation = "$iconPath,0"
     $shortcut.Save()
     if (-not (Test-Path -LiteralPath $shortcutPath -PathType Leaf)) {
         throw "Nao foi possivel criar o atalho: $shortcutPath"
     }
-    Write-Host "Atalho criado no ambiente de trabalho: $shortcutPath"
+    Write-Host "Atalho criado: $shortcutPath"
 }
 
 try {
@@ -44,7 +47,7 @@ try {
         throw "Extraia o pacote para uma pasta separada, fora de $destination, e volte a executar o instalador."
     }
 
-    foreach ($file in 'CitrixLauncher.ps1', 'OpenCitrix.bat', 'updatePassword.bat', 'icos\CitrixLauncher-cinza.ico') {
+    foreach ($file in 'CitrixLauncher.ps1', 'OpenCitrix.bat', 'updatePassword.bat', 'icos\CitrixLauncher-cinza.ico', 'icos\CitrixLauncher-password.ico') {
         if (-not (Test-Path -LiteralPath (Join-Path $source $file) -PathType Leaf)) {
             throw "Falta $file. Extraia o pacote completo antes de instalar."
         }
@@ -73,8 +76,10 @@ try {
     )
     Set-Content -LiteralPath $envFile -Value $settings -Encoding UTF8
 
-    Write-Host 'A criar o atalho do Citrix Launcher...'
-    New-LauncherShortcut -InstallDirectory $destination -DesktopDirectory ([Environment]::GetFolderPath('DesktopDirectory'))
+    $desktopDirectory = [Environment]::GetFolderPath('DesktopDirectory')
+    Write-Host 'A criar os atalhos do Citrix Launcher...'
+    New-Shortcut -InstallDirectory $destination -ShortcutDirectory $desktopDirectory -ShortcutName 'CitrixLauncher.lnk' -TargetFile 'OpenCitrix.bat' -IconFile 'icos\CitrixLauncher-cinza.ico'
+    New-Shortcut -InstallDirectory $destination -ShortcutDirectory $destination -ShortcutName 'UpdatePassword.lnk' -TargetFile 'updatePassword.bat' -IconFile 'icos\CitrixLauncher-password.ico'
     exit 0
 }
 catch {

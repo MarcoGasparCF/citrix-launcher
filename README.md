@@ -7,13 +7,13 @@ Configure `CITRIX_USERNAME` no ficheiro `.env` e execute `OpenCitrix.bat`. Com u
 1. Extraia o ZIP para uma pasta temporária fora de `%USERPROFILE%\apps\`.
 2. Execute [Instalar.bat](./Instalar.bat), mantendo-o junto dos restantes ficheiros do pacote.
 3. Introduza o nome de utilizador e, quando for pedida, a palavra-passe do Citrix.
-4. Após a confirmação da instalação, execute o atalho `CitrixLauncher` no ambiente de trabalho ou [OpenCitrix.bat](./OpenCitrix.bat) em `%USERPROFILE%\apps\`.
+4. Após a confirmação da instalação, execute o atalho `CitrixLauncher` no ambiente de trabalho ou [OpenCitrix.bat](./OpenCitrix.bat) em `%USERPROFILE%\apps\CitrixLauncher\`.
 
-O instalador cria a pasta `apps`, copia os ficheiros do pacote, grava `CITRIX_USERNAME` no `.env` e cria ou atualiza o atalho `CitrixLauncher` no ambiente de trabalho do utilizador, com o ícone cinzento. Mantém as outras definições de um `.env` já instalado e não copia a palavra-passe do pacote. A palavra-passe é pedida pelo [updatePassword.bat](./updatePassword.bat) e protegida pelo Windows.
+O instalador cria a pasta `%USERPROFILE%\apps\CitrixLauncher`, copia os ficheiros do pacote, grava `CITRIX_USERNAME` no `.env` e cria ou atualiza o atalho `CitrixLauncher` no ambiente de trabalho e `UpdatePassword.lnk` na pasta da aplicação, com os respetivos ícones. Mantém as outras definições de um `.env` já instalado e não copia a palavra-passe do pacote. A palavra-passe é pedida pelo [updatePassword.bat](./updatePassword.bat) e protegida pelo Windows.
 
 ## Atualizar a password
 
-Depois de mudar a password da conta da empresa, execute [updatePassword.bat](updatePassword.bat) com duplo clique e introduza a nova password quando for pedida. A introducao e oculta e a credencial anterior e substituida pela nova, protegida pelo Windows para a conta atual. Nao coloque a password no `.env`.
+Depois de mudar a password da conta da empresa, execute `UpdatePassword.lnk` na pasta `%USERPROFILE%\apps\CitrixLauncher` ou [updatePassword.bat](updatePassword.bat) e introduza a nova password quando for pedida. A introducao e oculta e a credencial anterior e substituida pela nova, protegida pelo Windows para a conta atual. Nao coloque a password no `.env`.
 
 Este atalho atualiza apenas a password guardada neste computador; nao altera a password da empresa. Depois, execute `OpenCitrix.bat` normalmente.
 
