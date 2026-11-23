@@ -7,9 +7,9 @@ Configure `CITRIX_USERNAME` no ficheiro `.env` e execute `OpenCitrix.bat`. Com u
 1. Extraia o ZIP para uma pasta temporária fora de `%USERPROFILE%\apps\`.
 2. Execute [Instalar.bat](./Instalar.bat), mantendo-o junto dos restantes ficheiros do pacote.
 3. Introduza o nome de utilizador e, quando for pedida, a palavra-passe do Citrix.
-4. Após a confirmação da instalação, execute [OpenCitrix.bat](./OpenCitrix.bat) em `%USERPROFILE%\apps\`.
+4. Após a confirmação da instalação, execute o atalho `CitrixLauncher` no ambiente de trabalho ou [OpenCitrix.bat](./OpenCitrix.bat) em `%USERPROFILE%\apps\`.
 
-O instalador cria a pasta `apps`, copia os ficheiros do pacote e grava `CITRIX_USERNAME` no `.env`. Mantém as outras definições de um `.env` já instalado e não copia a palavra-passe do pacote. A palavra-passe é pedida pelo [updatePassword.bat](./updatePassword.bat) e protegida pelo Windows.
+O instalador cria a pasta `apps`, copia os ficheiros do pacote, grava `CITRIX_USERNAME` no `.env` e cria ou atualiza o atalho `CitrixLauncher` no ambiente de trabalho do utilizador, com o ícone cinzento. Mantém as outras definições de um `.env` já instalado e não copia a palavra-passe do pacote. A palavra-passe é pedida pelo [updatePassword.bat](./updatePassword.bat) e protegida pelo Windows.
 
 ## Atualizar a password
 
@@ -36,6 +36,8 @@ Se o Edge nao arrancar com o perfil habitual, pode criar um perfil dedicado e gu
 Nesse perfil, abra o portal Citrix e configure o preenchimento automatico da password. Feche o Edge e adicione ao `.env` o caminho completo, por exemplo `EDGE_USER_DATA=C:\Users\utilizador\AppData\Local\CitrixLauncher\Edge`. A utilizacao da password guardada depende do preenchimento automatico e das politicas do Edge e do portal.
 
 Se houver varios recursos, configure `CITRIX_RESOURCE` com parte do nome de um unico recurso. O Citrix Workspace deve estar instalado e associado a ficheiros `.ica`. O EdgeDriver em `WebDriver\edgedriver_win64.zip` deve ter a mesma versao principal que o Edge.
+
+Para diagnosticar e resolver uma incompatibilidade de versões do Edge e do EdgeDriver, consulte [manutenção.md](./maintenance/manutenção.md).
 
 O login completo, a selecao do recurso e a abertura da sessao dependem da configuracao da conta e devem ser testados com um OTP valido.
 

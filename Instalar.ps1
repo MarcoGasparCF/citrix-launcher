@@ -5,6 +5,37 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+function New-LauncherShortcut {
+    param(
+        [string]$InstallDirectory,
+        [string]$DesktopDirectory
+    )
+
+    $launcherPath = Join-Path $InstallDirectory 'OpenCitrix.bat'
+    $iconPath = Join-Path $InstallDirectory 'icos\CitrixLauncher-cinza.ico'
+    if (-not (Test-Path -LiteralPath $launcherPath -PathType Leaf)) {
+        throw "Falta o launcher instalado: $launcherPath"
+    }
+    if (-not (Test-Path -LiteralPath $iconPath -PathType Leaf)) {
+        throw "Falta o icone do launcher: $iconPath"
+    }
+    if (-not $DesktopDirectory -or -not (Test-Path -LiteralPath $DesktopDirectory -PathType Container)) {
+        throw 'Nao foi possivel encontrar o ambiente de trabalho do utilizador.'
+    }
+
+    $shortcutPath = Join-Path $DesktopDirectory 'CitrixLauncher.lnk'
+    $shell = New-Object -ComObject WScript.Shell
+    $shortcut = $shell.CreateShortcut($shortcutPath)
+    $shortcut.TargetPath = $launcherPath
+    $shortcut.WorkingDirectory = $InstallDirectory
+    $shortcut.IconLocation = "$iconPath,0"
+    $shortcut.Save()
+    if (-not (Test-Path -LiteralPath $shortcutPath -PathType Leaf)) {
+        throw "Nao foi possivel criar o atalho: $shortcutPath"
+    }
+    Write-Host "Atalho criado no ambiente de trabalho: $shortcutPath"
+}
+
 try {
     $source = $PSScriptRoot.TrimEnd('\')
     if ($source -ne $destination -and (
@@ -13,7 +44,7 @@ try {
         throw "Extraia o pacote para uma pasta separada, fora de $destination, e volte a executar o instalador."
     }
 
-    foreach ($file in 'CitrixLauncher.ps1', 'OpenCitrix.bat', 'updatePassword.bat') {
+    foreach ($file in 'CitrixLauncher.ps1', 'OpenCitrix.bat', 'updatePassword.bat', 'icos\CitrixLauncher-cinza.ico') {
         if (-not (Test-Path -LiteralPath (Join-Path $source $file) -PathType Leaf)) {
             throw "Falta $file. Extraia o pacote completo antes de instalar."
         }
@@ -41,6 +72,9 @@ try {
         'CITRIX_USERNAME="{0}"' -f $username
     )
     Set-Content -LiteralPath $envFile -Value $settings -Encoding UTF8
+
+    Write-Host 'A criar o atalho do Citrix Launcher...'
+    New-LauncherShortcut -InstallDirectory $destination -DesktopDirectory ([Environment]::GetFolderPath('DesktopDirectory'))
     exit 0
 }
 catch {

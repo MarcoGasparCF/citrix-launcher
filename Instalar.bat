@@ -14,7 +14,7 @@ if not "%result%"=="0" goto failed
 
 echo.
 echo Instalacao concluida em "%installDir%".
-echo Execute OpenCitrix.bat para iniciar o Citrix Launcher.
+echo Execute o atalho CitrixLauncher no ambiente de trabalho para iniciar.
 pause
 exit /b 0
 
