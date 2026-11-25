@@ -7,6 +7,7 @@ Este documento regista problemas identificados, o seu diagnóstico e a resoluç�
 - Cada ocorrência tem um ID no formato `AAAA/NNN`: ano de identificação seguido de um número sequencial com três algarismos.
 - A sequência começa em `001` em cada ano e aumenta a cada nova ocorrência. Não reutilize IDs.
 - Registe cada problema numa secção própria, usando o ID e uma descrição curta no título.
+- Associe cada nova ocorrência a um issue do repositório e registe a ligação no campo correspondente.
 - Separe o erro observado, o diagnóstico, a resolução e a respetiva verificação.
 
 ## 2026/001 — Incompatibilidade entre o Edge e o EdgeDriver
@@ -110,6 +111,7 @@ Copie esta secção para o fim do documento e atribua o próximo ID sequencial d
 | Estado | Em investigação / Resolvido |
 | Componente | Componente afetado |
 | ID | `AAAA/NNN` |
+| Issue do repositório (obrigatório) | [#NNN](https://github.com/MarcoGasparCF/citrix-launcher/issues/NNN) |
 
 ### Erro observado
 
